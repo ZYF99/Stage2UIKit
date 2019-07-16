@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F5A623</color>
+    <color name="colorPrimaryDark">#F5A623</color>
+    <color name="colorAccent">#F5A623</color>
+
+    <color name="bg_title">#F5A623</color>
+    <color name="text_title">#FFFFFF</color>
+
+    <color name="bg_tab_selected">#F5A623</color>
+    <color name="bg_tab_nor">#FFFFFF</color>
+
+
+    <color name="text_tip">#FFFFFF</color>
+    <color name="text_first">#333333</color>
+    <color name="text_second">#999999</color>
+
+
+    <color name="star">#FFCC00</color>
+
+
+
+
+</resources>

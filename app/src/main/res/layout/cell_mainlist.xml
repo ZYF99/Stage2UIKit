@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:background="@color/colorPrimary" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/linearLayout">
+                <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="17dp"
+                        app:srcCompat="@drawable/tip_new3"
+                        android:paddingTop="3dp"
+                        android:id="@+id/imageView"
+                        android:layout_weight="0"
+                        android:scaleType="centerCrop"/>
+                <TextView
+                        android:text="仕事内容タイトル "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/text_tip"
+                        android:id="@+id/textView2"
+                        android:layout_weight="0" android:textStyle="bold"/>
+                <TextView
+                        android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/text_tip"
+                        android:id="@+id/textView"
+                />
+            </LinearLayout>
+            <TextView
+                    android:text="　　 　    　 テスト拠点名（最大項目）（必須項目）最大50文字 改行します。（株式会社ジャーナルネット（全項目））"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginTop="4dp"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="12sp"/>
+            <TextView
+                    android:text="★★★★★"
+                    android:textColor="@color/star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sdf"
+                    android:paddingLeft="12dp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toTopOf="@+id/textView3"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
