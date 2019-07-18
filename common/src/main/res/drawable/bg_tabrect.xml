@@ -6,7 +6,7 @@ android:shape="rectangle">
     <!-- 填充 -->
     <solid android:color="#FFF" />
 
-    <corners android:radius="8dp"/>
+    <corners android:radius="4dp"/>
 
     <stroke android:color="@color/bg_title"
             android:width="1dp"/>

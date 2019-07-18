@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            android:background="@drawable/bg_gradual_cell_main">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/linearLayout">
+            <TextView
+                    android:text="仕事内容タイトル "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/text_tip"
+                    android:id="@+id/tv_job_name"
+                    android:layout_weight="0" android:textStyle="bold"/>
+            <TextView
+                    android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/text_tip"
+                    android:id="@+id/tv_job_content"
+            />
+        </LinearLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" android:id="@+id/frame_brief"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="12dp" android:layout_marginEnd="12dp">
+
+            <TextView
+                    android:text="テスト拠点名（最小項目）（株式会社ジャーナルネット）"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="4dp"
+                    android:id="@+id/tv_brief"
+                    android:lineSpacingExtra="2dp"
+                    android:textSize="12sp"/>
+        </FrameLayout>
+        <LinearLayout
+                android:id="@+id/lin_type"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/frame_brief"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp" android:gravity="center_vertical">
+            <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/icn_job_regular"
+                    android:id="@+id/cell_type"/>
+            <TextView
+                    android:text="キャッチコピー最大50文字。"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:id="@+id/tv_adtext"
+                    android:textColor="@color/text_first"
+                    android:textSize="16sp"
+                    android:maxLines="10"
+                    android:singleLine="false"
+                    android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/lin_type" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp" android:layout_marginTop="15dp" android:gravity="center_vertical"
+                android:id="@+id/lin_workstation">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_weight="0">
+                <androidx.viewpager.widget.ViewPager
+                        android:layout_width="120dp"
+                        android:layout_height="80dp" android:layout_weight="1">
+                </androidx.viewpager.widget.ViewPager>
+                <TextView
+                        android:text="次の画像"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_btn_blue"
+                        android:background="@color/text_btn_blue_back"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="26dp"
+                        android:paddingRight="26dp"
+                        android:id="@+id/textView7"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:gravity="center_vertical"
+                        android:layout_weight="0">
+                    <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            app:srcCompat="@drawable/icn_typeofjob_detail"
+                            android:id="@+id/dsfgv"
+                            android:layout_weight="0"/>
+                    <TextView
+                            android:text="IT・エンジニア系（システ …"
+                            android:singleLine="true"
+                            android:textColor="@color/text_first"
+                            android:layout_marginLeft="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/textView4" android:layout_weight="0"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="0">
+                    <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp" app:srcCompat="@drawable/icn_typeofjob_detail"
+                            android:id="@+id/dsf" android:layout_weight="0"/>
+                    <TextView
+                            android:text="時給1000円"
+                            android:singleLine="true"
+                            android:textColor="@color/text_first"
+                            android:layout_marginLeft="4dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textVdfsgiew4" android:layout_weight="0"
+                            android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:gravity="center_vertical"
+                        android:layout_weight="0">
+                    <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp" app:srcCompat="@drawable/icn_typeofjob_detail"
+                            android:id="@+id/imageView2" android:layout_weight="0"/>
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:layout_weight="0">
+                        <TextView
+                                android:text="京都府京都市北区 その他 …"
+                                android:singleLine="true"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/text_first"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/dasd" android:layout_weight="0"/>
+                        <TextView
+                                android:text="最寄駅：京都、九条（京都 …"
+                                android:singleLine="true"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/text_first"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/dasd2" android:layout_weight="0"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="8dp"
+                    android:rotation="-90"
+                    android:layout_height="13dp" app:srcCompat="@drawable/icn_chevron_down_gay"
+                    android:id="@+id/worksta_btn_next" android:layout_weight="0"/>
+        </LinearLayout>
+
+
+        <TextView
+                android:text="本日掲載終了予定"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_warning_end"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:textColor="@color/text_warning" android:textStyle="bold"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lin_endtime"
+                app:layout_constraintTop_toBottomOf="@id/lin_workstation"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical">
+
+
+            <TextView
+                    android:text="[掲載終了日] 2020年12月31日"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="1dp"
+                    android:id="@+id/tv_endtime_txt"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_second"
+                    android:textSize="12sp"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/bg_btn_keep_rect_end"
+                    android:id="@+id/btn_keep"
+                    android:gravity="center">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/icn_kept_on_btn"
+                        android:id="@+id/imageView4"
+                        android:layout_weight="1"/>
+                <TextView
+                        android:text="キープする"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:id="@+id/textView3"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_first"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gang"
+                app:layout_constraintTop_toBottomOf="@id/lin_endtime"
+                android:id="@+id/gang"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

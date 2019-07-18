@@ -15,6 +15,12 @@
     <color name="text_first">#333333</color>
     <color name="text_second">#999999</color>
 
+    <color name="text_warning">#D93D1E</color>
+    <color name="text_btn_blue">#75B4D9</color>
+    <color name="text_btn_blue_back">#F3F3F3</color>
+
+    <color name="gang">#F3F3F3</color>
+
 
     <color name="star">#FFCC00</color>
 
