@@ -19,10 +19,23 @@
     <color name="text_btn_blue">#75B4D9</color>
     <color name="text_btn_blue_back">#F3F3F3</color>
 
+
+
+    <color name="bg_inputLin_correct">#C8C7CC</color>
+    <color name="bg_inputLin_idle">#C8C7CC</color>
+    <color name="bg_inputLin_selected">#F5A623</color>
+    <color name="bg_inputLin_error">#EA5050</color>
+
+    <color name="text_inputLin_idle">#FF999999</color>
+    <color name="text_inputLin_error">#EA5050</color>
+
+
+
+
     <color name="gang">#F3F3F3</color>
-
-
     <color name="star">#FFCC00</color>
+    <color name="cell_idel">#ffffff</color>
+    <color name="cell_touch">#A1C0C0C0</color>
 
 
 

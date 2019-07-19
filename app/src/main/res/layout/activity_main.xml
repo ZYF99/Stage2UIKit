@@ -7,15 +7,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        tools:context=".MainActivity">
+        tools:context=".MainBaseActivity">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:gravity="center"
-            android:background="@color/colorPrimary" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/title">
         <TextView
                 android:text="Stage2-UIKit"
@@ -38,43 +40,55 @@
             android:orientation="vertical">
 
 
-        <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="9dp"
-                android:layout_marginRight="9dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_tabrect">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_tabrect">
 
-            <com.google.android.material.tabs.TabLayout
+                <com.google.android.material.tabs.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        app:tabTextColor="@color/colorPrimary"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabGravity="fill"
+                        android:layout_margin="1dp"
+                        app:tabSelectedTextColor="#FFFFFF"
+                        app:tabBackground="@drawable/bg_tab"
+                        app:tabRippleColor="@android:color/transparent" android:layout_marginLeft="1dp"
+
+                        android:id="@+id/main_tab">
+
+                    <com.google.android.material.tabs.TabItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="一覧"/>
+
+                    <com.google.android.material.tabs.TabItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="応募情報"/>
+
+                </com.google.android.material.tabs.TabLayout>
+            </RelativeLayout>
+            <View
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    app:tabTextColor="@color/colorPrimary"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabGravity="fill"
-                    android:layout_margin="1dp"
-                    app:tabSelectedTextColor="#FFFFFF"
-                    app:tabBackground="@drawable/bg_tab"
-                    app:tabRippleColor="@android:color/transparent" android:layout_marginLeft="1dp"
-
-                    android:id="@+id/main_tab">
-
-                <com.google.android.material.tabs.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="一覧"/>
-
-                <com.google.android.material.tabs.TabItem
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="応募情報"/>
-
-            </com.google.android.material.tabs.TabLayout>
-        </RelativeLayout>
+                    android:layout_height="1dp"
+                    android:background="@color/gang"
+                    app:layout_constraintTop_toBottomOf="@id/lin_endtime"
+                    android:id="@+id/gang" android:layout_weight="0"/>
+        </LinearLayout>
         <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorBack"
                 android:id="@+id/main_viewpager"/>
 
     </LinearLayout>

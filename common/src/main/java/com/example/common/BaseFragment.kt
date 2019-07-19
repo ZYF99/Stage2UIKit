@@ -6,31 +6,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-abstract class Fragment : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     abstract val layoutId:Int
 
+
+    //create view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
         return inflater.inflate(layoutId,container,false)
     }
 
+
+    //do when view created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBefore()
         initWidget()
-        initdata()
+        initData()
     }
 
+
+    //something init before initWidget
     open fun initBefore(){
 
 
     }
 
+
+    //widget init
     abstract fun initWidget()
 
-    open fun initdata(){
+
+    //data init
+    open fun initData(){
 
     }
 

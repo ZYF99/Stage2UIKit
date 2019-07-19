@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
+        android:background="@drawable/selector_cell"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -35,7 +36,7 @@
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
                     android:textColor="@color/text_tip"
-                    android:id="@+id/tv_job_name"
+                    android:id="@+id/tv_txt_title"
                     android:layout_weight="0" android:textStyle="bold"/>
             <TextView
                     android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
@@ -45,7 +46,7 @@
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
                     android:textColor="@color/text_tip"
-                    android:id="@+id/tv_job_content"
+                    android:id="@+id/tv_txt"
             />
         </LinearLayout>
         <FrameLayout
@@ -62,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="4dp"
-                    android:id="@+id/tv_brief"
+                    android:id="@+id/tv_name"
                     android:lineSpacingExtra="2dp"
                     android:textSize="12sp"/>
         </FrameLayout>
@@ -83,10 +84,10 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:srcCompat="@drawable/icn_job_regular"
-                    android:id="@+id/cell_type"/>
+                    android:id="@+id/im_emp"/>
             <TextView
                     android:text="キャッチコピー最大50文字。"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:id="@+id/tv_adtext"
@@ -99,46 +100,31 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/lin_type" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="12dp"
-                android:layout_marginEnd="12dp" android:layout_marginTop="15dp" android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/lin_type"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
                 android:id="@+id/lin_workstation">
             <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_weight="0">
-                <androidx.viewpager.widget.ViewPager
-                        android:layout_width="120dp"
-                        android:layout_height="80dp" android:layout_weight="1">
-                </androidx.viewpager.widget.ViewPager>
-                <TextView
-                        android:text="次の画像"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_btn_blue"
-                        android:background="@color/text_btn_blue_back"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="26dp"
-                        android:paddingRight="26dp"
-                        android:id="@+id/textView7"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center">
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:layout_weight="0">
                     <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             app:srcCompat="@drawable/icn_typeofjob_detail"
                             android:id="@+id/dsfgv"
                             android:layout_weight="0"/>
@@ -148,7 +134,7 @@
                             android:textColor="@color/text_first"
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/textView4" android:layout_weight="0"/>
+                            android:layout_height="wrap_content" android:id="@+id/tv_occg_name" android:layout_weight="0"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -159,8 +145,8 @@
                         android:gravity="center_vertical"
                         android:layout_weight="0">
                     <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp" app:srcCompat="@drawable/icn_typeofjob_detail"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp" app:srcCompat="@drawable/icn_wage_detail"
                             android:id="@+id/dsf" android:layout_weight="0"/>
                     <TextView
                             android:text="時給1000円"
@@ -169,7 +155,7 @@
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textVdfsgiew4" android:layout_weight="0"
+                            android:id="@+id/tv_sal" android:layout_weight="0"
                             android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
@@ -178,29 +164,29 @@
                         android:layout_height="wrap_content" android:gravity="center_vertical"
                         android:layout_weight="0">
                     <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp" app:srcCompat="@drawable/icn_typeofjob_detail"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp" app:srcCompat="@drawable/icn_map_detail"
                             android:id="@+id/imageView2" android:layout_weight="0"/>
                     <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:layout_weight="0">
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_weight="0">
                         <TextView
                                 android:text="京都府京都市北区 その他 …"
                                 android:singleLine="true"
-                                android:layout_marginLeft="4dp"
                                 android:textColor="@color/text_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/dasd" android:layout_weight="0"/>
+                                android:id="@+id/tv_pref" android:layout_weight="0"/>
                         <TextView
                                 android:text="最寄駅：京都、九条（京都 …"
                                 android:singleLine="true"
-                                android:layout_marginLeft="4dp"
                                 android:textColor="@color/text_first"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/dasd2" android:layout_weight="0"/>
+                                android:id="@+id/tv_station_name" android:layout_weight="0"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -217,9 +203,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_warning_end"
+                android:layout_marginTop="12dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
-                android:textColor="@color/text_warning" android:textStyle="bold"/>
+                android:textColor="@color/text_warning"
+                android:textStyle="bold"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

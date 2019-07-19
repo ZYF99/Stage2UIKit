@@ -1,20 +1,20 @@
 package com.example.stage2_uikit
 
-import androidx.fragment.app.Fragment
-import com.example.common.Activity
-import com.example.common.Adapter_ViewPager
+import com.example.common.BaseActivity
+import com.example.common.BaseFragment
+import com.example.common.adapter_pager.FragmentAdapter
 import com.example.stage2_uikit.main.MainFragment
 import com.example.stage2_uikit.second.SecondFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : Activity() {
+class MainBaseActivity : BaseActivity() {
 
 
-    private lateinit var list_fragment: List<Pair<Fragment,String>>
+    private lateinit var list_fragment: MutableList<Pair<BaseFragment,String>>
     private lateinit var mainFragment: MainFragment
     private lateinit var secFragment: SecondFragment
-    private lateinit var pagerAdapter: Adapter_ViewPager
+    private lateinit var pagerAdapter: FragmentAdapter
 
     //找到布局
     override val contentLayoutId = R.layout.activity_main
@@ -26,8 +26,8 @@ class MainActivity : Activity() {
         mainFragment = MainFragment()
         secFragment = SecondFragment()
         main_tab.setupWithViewPager(main_viewpager)
-        list_fragment = listOf(Pair(mainFragment,"一覧") ,Pair(secFragment,"応募情報"))
-        pagerAdapter = Adapter_ViewPager(supportFragmentManager,list_fragment)
+        list_fragment = mutableListOf(Pair(mainFragment,"一覧") ,Pair(secFragment,"応募情報"))
+        pagerAdapter = FragmentAdapter(supportFragmentManager, list_fragment)
         main_viewpager.adapter = pagerAdapter
     }
 

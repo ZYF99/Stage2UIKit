@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 
-abstract class Activity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     //得到当前界面布局ID
     open abstract val contentLayoutId: Int
