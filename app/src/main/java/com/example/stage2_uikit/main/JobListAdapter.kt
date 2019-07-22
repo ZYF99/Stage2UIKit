@@ -1,39 +1,28 @@
 package com.example.stage2_uikit.main
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.example.common.adapter_pager.ImagePagerAdapter
 import com.example.factory.data.Job
 import com.example.stage2_uikit.R
 import kotterknife.bindView
 
-class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class JobListAdapter(context: Context, private var list: MutableList<Job>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val BASEVIEW = 0
     private val NEWVIEW = 1
 
-    //the last image currentposition
-    var oldStationPage = -1
-    var oldPhotographyPage = -1
+    //the last stationImage currentposition
+    private var oldStationPage = -1
 
-    var list: MutableList<Job> = mutableListOf()
-    var context: Context? = null
-
-    constructor(context: Context, list: MutableList<Job>) {
-        this.list = list
-        this.context = context
-    }
+    private var context: Context? = context
 
 
     //ViewHolder Create
@@ -54,125 +43,116 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
         when (holder) {
+            //base type item
             is ViewHolderOfBase -> {
 
             }
+            //new type item
             is ViewHolderOfNew -> {
-
-                oldPhotographyPage = -1
                 oldStationPage = -1
-                //workstation block , just image
+
+                //workstation banner
                 val stationAdapter = ImagePagerAdapter(context!!, item.imgList_workstation, holder.stationPager)
                 holder.stationPager.adapter = stationAdapter
 
-                //photography block
+                //photography banner
                 //list with fragment and Triple
                 val list = item.list_photography.map {
-
                     Pair(PhotographyFragment(it), Triple(it.first, it.second, it.third))
                 }
 
                 val adapterPhotography = PhotographyAdapter(context!!, list)
                 holder.photographyPager.adapter = adapterPhotography
 
-                //workstation nextBtn clickevent, image list loop
-                holder.btn_station_next.setOnClickListener {
-                    //do imageList loop
-                    doLoop(holder,0,item.imgList_workstation.size)
+
+                //station block**************************************************************************
+                //init stationBtn
+                if (item.imgList_workstation.size <= 1) holder.btnStationNext.visibility = View.INVISIBLE
+                //workstation btnNext click event
+                holder.btnStationNext.setOnClickListener {
+
+                    //do workstation imageList loop
+                    val current = holder.stationPager.currentItem
+                    when {
+
+                        current > oldStationPage -> {
+                            when {
+                                current + 1 > item.imgList_workstation.size - 1 -> holder.stationPager.currentItem =
+                                    current - 1
+                                else -> holder.stationPager.currentItem = current + 1
+                            }
+                        }
+                        else -> {
+                            when {
+                                current - 1 < 0 -> holder.stationPager.currentItem = current + 1
+                                else -> holder.stationPager.currentItem = current - 1
+                            }
+                        }
+                    }
+                    oldStationPage = current
                 }
 
+                //pr block*******************************************************************************
+                //init PrBtn
+                holder.btnPrLast.visibility = View.INVISIBLE
+                if (item.list_photography.size <= 1) holder.btnPrNext.visibility = View.INVISIBLE
+
+                //pr btn click event -> last
                 holder.btnPrNext.setOnClickListener {
-                    doLoop(holder,1,item.list_photography.size)
+                    //check if it can click next
+                    if (holder.photographyPager.currentItem + 1 <= item.list_photography.size - 1) {
+                        holder.photographyPager.currentItem += 1
+                        holder.btnPrLast.visibility = View.VISIBLE
+                        //check if it has more, no:hide the btnNext
+                        if (holder.photographyPager.currentItem + 1 > item.list_photography.size - 1) {
+                            holder.btnPrNext.visibility = View.INVISIBLE
+                        }
+                    }
                 }
 
+                //pr btn click event -> next
                 holder.btnPrLast.setOnClickListener {
-                    doLoop(holder,1,item.list_photography.size)
+                    //check if it has last
+                    if (holder.photographyPager.currentItem - 1 >= 0) {
+                        holder.photographyPager.currentItem -= 1
+                        holder.btnPrNext.visibility = View.VISIBLE
+                        //check if it has last, no:hide the btnLast
+                        if (holder.photographyPager.currentItem - 1 < 0) {
+                            holder.btnPrLast.visibility = View.INVISIBLE
+                        }
+                    }
                 }
-
 
             }
         }
     }
-
-
-    private fun doLoop(holder: ViewHolderOfNew,stationOrPr:Int,listSize:Int) {
-        when{
-            //workstation
-            stationOrPr == 0 ->{
-                val current = holder.stationPager.currentItem
-                when {
-                    current > oldStationPage -> {
-                        when {
-                            current + 1 >= listSize - 1 -> holder.stationPager.currentItem = current - 1
-                            else -> holder.stationPager.currentItem = current + 1
-                        }
-                    }
-                    else -> {
-                        when {
-                            current - 1 < 0 -> holder.stationPager.currentItem = current + 1
-                            else -> holder.stationPager.currentItem = current - 1
-                        }
-                    }
-                }
-                oldStationPage = current
-            }
-            //pr
-            stationOrPr == 1 -> {
-                val current = holder.photographyPager.currentItem
-                when {
-                    current > oldPhotographyPage -> {
-                        when {
-                            current + 1 >= listSize - 1 -> holder.photographyPager.currentItem = current - 1
-                            else -> holder.photographyPager.currentItem = current + 1
-                        }
-                    }
-                    else -> {
-                        when {
-                            current - 1 < 0 -> holder.photographyPager.currentItem = current + 1
-                            else -> holder.photographyPager.currentItem = current - 1
-                        }
-                    }
-                }
-                oldPhotographyPage = current
-            }
-
-        }
-
-    }
-
 
     //Getting item types based on filter:isNew
     override fun getItemViewType(position: Int): Int {
-        when {
-            list[position].isNew -> return NEWVIEW
-            !list[position].isNew -> return BASEVIEW
+        return when {
+            list[position].isNew -> NEWVIEW
+            else -> BASEVIEW
         }
-        return super.getItemViewType(position)
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
     }
 
     class ViewHolderOfNew(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val tv_txt_title: TextView = itemView.findViewById(R.id.tv_txt)
-        val tv_txt: TextView = itemView.findViewById(R.id.tv_txt)
-        val tv_option: TextView = itemView.findViewById(R.id.tv_option)
-        val im_emp: ImageView = itemView.findViewById(R.id.im_emp)
-        val tv_phras: TextView = itemView.findViewById(R.id.tv_phrase)
-        val tv_occg_name: TextView = itemView.findViewById(R.id.tv_occg_name)
-        val tv_sal: TextView = itemView.findViewById(R.id.tv_sal)
-        val tv_pref: TextView = itemView.findViewById(R.id.tv_pref)
-        val tv_station_name: TextView = itemView.findViewById(R.id.tv_station_name)
+        val tv_txt_title: TextView by bindView(R.id.tv_txt)
+        val tv_txt: TextView by bindView(R.id.tv_txt)
+        val tv_option: TextView by bindView(R.id.tv_option)
+        val im_emp: ImageView by bindView(R.id.im_emp)
+        val tv_phras: TextView by bindView(R.id.tv_phrase)
+        val tv_occg_name: TextView by bindView(R.id.tv_occg_name)
+        val tv_sal: TextView by bindView(R.id.tv_sal)
+        val tv_pref: TextView by bindView(R.id.tv_pref)
+        val tv_station_name: TextView by bindView(R.id.tv_station_name)
 
         val stationPager: ViewPager by bindView(R.id.cell_new_pager_workstation)
-        val btn_station_next: TextView by bindView(R.id.btn_station_next)
+        val btnStationNext: TextView by bindView(R.id.btn_station_next)
         val photographyPager: ViewPager by bindView(R.id.cell_new_pager_photography)
 
         val btnPrLast: ImageView by bindView(R.id.btn_photography_last)
         val btnPrNext: ImageView by bindView(R.id.btn_photography_next)
-
 
     }
 
@@ -181,5 +161,7 @@ class JobListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //lateinit var pager_photography: ViewPager
     }
 
-
+    override fun getItemCount(): Int {
+        return list.size
+    }
 }

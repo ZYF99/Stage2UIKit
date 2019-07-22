@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainBaseActivity : BaseActivity() {
 
 
-    private lateinit var list_fragment: MutableList<Pair<BaseFragment,String>>
+    private lateinit var listFragment: MutableList<Pair<BaseFragment,String>>
     private lateinit var mainFragment: MainFragment
     private lateinit var secFragment: SecondFragment
     private lateinit var pagerAdapter: FragmentAdapter
@@ -26,8 +26,8 @@ class MainBaseActivity : BaseActivity() {
         mainFragment = MainFragment()
         secFragment = SecondFragment()
         main_tab.setupWithViewPager(main_viewpager)
-        list_fragment = mutableListOf(Pair(mainFragment,"一覧") ,Pair(secFragment,"応募情報"))
-        pagerAdapter = FragmentAdapter(supportFragmentManager, list_fragment)
+        listFragment = mutableListOf(Pair(mainFragment,"一覧") ,Pair(secFragment,"応募情報"))
+        pagerAdapter = FragmentAdapter(supportFragmentManager, listFragment)
         main_viewpager.adapter = pagerAdapter
     }
 

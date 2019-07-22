@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    //得到当前界面布局ID
+    //get current layout id
     open abstract val contentLayoutId: Int
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +17,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
+    //initAll
     private fun initWindows() {
-            //得到界面ID并设置到界面中
+            //get id and set it to layout
             val layId = contentLayoutId
             setContentView(layId)
             initBefore()
@@ -27,28 +28,22 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
-    //初始化控件调用之前
-
+    //init something before initWidget
     open fun initBefore() {
 
     }
 
-    //初始化控件
+    //init widget
     open fun initWidget(){
 
     }
 
 
-    //初始化数据
+    //init data after initWidget
     open fun initData() {
 
     }
 
-    /*初始化相关参数 参数bundle
-    参数正确返回true
-    错误返回false*/
-    open fun initArgs(bundle: Bundle?): Boolean {
-        return true
-    }
+
 
 }
