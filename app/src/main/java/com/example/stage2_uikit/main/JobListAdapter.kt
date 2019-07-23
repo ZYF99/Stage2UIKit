@@ -24,7 +24,6 @@ class JobListAdapter(context: Context, private var list: MutableList<Job>) :
 
     private var context: Context? = context
 
-
     //ViewHolder Create
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
