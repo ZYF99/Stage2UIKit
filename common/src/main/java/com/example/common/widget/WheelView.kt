@@ -92,7 +92,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         invalidate()
     }
 
-    fun setSelected(str:String){
+    fun setSelected(str: String) {
         mDataList?.indexOf(str)?.let { setSelected(it) }
     }
 
@@ -236,7 +236,6 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
             moveHeadToTail()
             mMoveLen += MARGIN_ALPHA * mMinTextSize
         }
-
         mLastDownY = event.y
         invalidate()
     }

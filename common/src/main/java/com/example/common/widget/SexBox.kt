@@ -9,11 +9,10 @@ import android.widget.TextView
 import com.example.common.R
 
 
-class SexBox : LinearLayout {
-    companion object{
-        public val MAN = 0
-        public val WOMAN = 1
-    }
+const val MAN = 0
+const val WOMAN = 1
+
+class SexBox(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     private var isMan = false
     private var isWoman = false
@@ -22,19 +21,17 @@ class SexBox : LinearLayout {
     private var onBoxClickListener: OnBoxItemClickListener? = null
 
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    init {
         LayoutInflater.from(context).inflate(R.layout.sexbox, this)
         manText = findViewById(R.id.man_tx)
         womanText = findViewById(R.id.woman_tx)
         turnToMan()
-
         manText!!.setOnClickListener {
             if (isWoman) turnToMan()
         }
         womanText!!.setOnClickListener {
             if (isMan) turnToWoman()
         }
-
     }
 
 
@@ -67,10 +64,6 @@ class SexBox : LinearLayout {
 
     }
 
-
-    public fun setOnBoxClickListener(onBoxItemClickListener: OnBoxItemClickListener){
-        this.onBoxClickListener = onBoxClickListener;
-    }
 
     interface OnBoxItemClickListener{
 
