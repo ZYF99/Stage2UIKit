@@ -19,7 +19,7 @@ class JobListAdapter(context: Context, private var list: MutableList<Job>) :
     private val BASEVIEW = 0
     private val NEWVIEW = 1
 
-    //the last stationImage currentposition
+    //the last stationImage current position
     private var oldStationPage = -1
 
     private var context: Context? = context
@@ -164,4 +164,6 @@ class JobListAdapter(context: Context, private var list: MutableList<Job>) :
     override fun getItemCount(): Int {
         return list.size
     }
+
+
 }

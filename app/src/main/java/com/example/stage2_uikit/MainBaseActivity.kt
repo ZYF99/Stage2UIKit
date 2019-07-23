@@ -8,6 +8,7 @@ import com.example.stage2_uikit.second.SecondFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
+
 class MainBaseActivity : BaseActivity() {
 
 

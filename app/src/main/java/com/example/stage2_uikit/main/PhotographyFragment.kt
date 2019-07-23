@@ -6,7 +6,7 @@ import com.example.common.BaseFragment
 import com.example.stage2_uikit.R
 import kotlinx.android.synthetic.main.page_cell_photography.*
 
-class PhotographyFragment(val photography:Triple<String,String,String>) : BaseFragment(){
+class PhotographyFragment(private val photography:Triple<String,String,String>) : BaseFragment(){
     override val layoutId = R.layout.page_cell_photography
 
     override fun initWidget(view:View) {

@@ -69,7 +69,6 @@ class MainFragment : BaseFragment() {
         jobListAdapter = JobListAdapter(context!!, list)
         mainrec.layoutManager = LinearLayoutManager(context)
         mainrec.adapter = jobListAdapter
-
     }
 
 }

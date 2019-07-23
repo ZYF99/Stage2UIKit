@@ -2,11 +2,8 @@ package com.example.common.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import com.example.common.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,24 +22,14 @@ class DatePopView(context: Context) : BottomDialogView(context){
     private lateinit var wheelView3: WheelView
 
 
-    private lateinit var listener: OnMyClickListener
-
-    private lateinit var btnFinish: TextView
     @SuppressLint("SimpleDateFormat")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initView() {
         val date = getCurrentDate()
 
         years = date.get(Calendar.YEAR).toString()+"年"
         months = date.get(Calendar.MONTH).toString()+"月"
         days = date.get(Calendar.DATE).toString()+"日"
 
-
-
-        btnFinish = bView.findViewById(R.id.btn_finish)
-        btnFinish.setOnClickListener {
-            listener.onFinishClick()
-        }
         //加载年月日的三个 CalendarView 的 id
         wheelView1 = bView.findViewById(R.id.year) as WheelView
         wheelView2 = bView.findViewById(R.id.month) as WheelView
@@ -54,7 +41,7 @@ class DatePopView(context: Context) : BottomDialogView(context){
         val gradeDay = mutableListOf<String>()
 
         //为数据项赋值
-        val thisYear = Integer.parseInt(SimpleDateFormat("yyyy").format(java.util.Date()))
+        val thisYear = Integer.parseInt(SimpleDateFormat("yyyy").format(Date()))
         for (i in 1980..thisYear)
         //从1980到今年
             gradeYear.add(i.toString() + "年")
@@ -94,20 +81,8 @@ class DatePopView(context: Context) : BottomDialogView(context){
             }
 
         })
-
-
     }
 
-
-
-
-    fun setOnClickListener(listener: OnMyClickListener){
-        this.listener = listener
-    }
-
-    interface OnMyClickListener {
-        fun onFinishClick()
-    }
 
     private fun getCurrentDate():Calendar{
 

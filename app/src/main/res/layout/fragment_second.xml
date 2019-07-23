@@ -9,6 +9,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:paddingTop="15dp"
             android:gravity="center">
         <LinearLayout
@@ -50,12 +51,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="6dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp">
 
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:singleLine="true"
                         android:background="@drawable/selector_inputlin"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
@@ -135,6 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
+                        android:singleLine="true"
                         android:background="@drawable/selector_inputlin"
                         android:paddingEnd="7dp"
                         android:paddingStart="11dp"
@@ -238,7 +242,7 @@
                         android:layout_width="10dp"
                         android:layout_height="6dp"
                         android:focusable="true"
-                        android:id="@+id/imageView3"
+                        android:id="@+id/btndatedown"
                         android:layout_weight="0"
                         app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="14dp"
                         app:layout_constraintEnd_toEndOf="@+id/tv_date"
@@ -358,6 +362,7 @@
                         android:paddingRight="7dp"
                         android:background="@drawable/selector_inputlin"
                         android:inputType="number|phone"
+                        android:maxLength="18"
                         android:hint="09000000000"
                         android:ems="10"
                         android:id="@+id/edit_tel"
@@ -425,6 +430,7 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:digits="0123456789abcdefghijklmnopqrstuvwxyz.@"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:paddingLeft="11dp"
@@ -440,7 +446,8 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent" android:paddingStart="11dp"
+                        android:paddingEnd="7dp"/>
                 <TextView
                         android:text="メールアドレスの入力は必須です"
                         android:layout_width="wrap_content"
@@ -523,7 +530,7 @@
                 <ImageView
                         android:layout_width="10dp"
                         android:layout_height="6dp"
-                        android:id="@+id/btn_work"
+                        android:id="@+id/btnjobdown"
                         android:focusable="true"
                         android:layout_weight="0"
                         android:src="@drawable/selector_arrow"
@@ -539,7 +546,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_inputLin_error"
-                        android:id="@+id/error_address"
+                        android:id="@+id/error_job"
                         android:layout_weight="0"
                         android:layout_gravity="right"
                         android:textSize="6sp" android:layout_marginEnd="7dp" app:layout_constraintEnd_toEndOf="parent"
@@ -616,7 +623,7 @@
                 <ImageView
                         android:layout_width="10dp"
                         android:layout_height="6dp"
-                        android:id="@+id/btn_city"
+                        android:id="@+id/btncitydown"
                         android:src="@drawable/selector_arrow"
                         android:focusable="true"
                         android:layout_weight="0"
@@ -662,11 +669,15 @@
 
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/view" android:layout_weight="4"/>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/view"
+                        android:layout_weight="4"
+                        tools:ignore="NestedWeights"/>
                 <EditText
                         android:id="@+id/edit_road"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:hint="中央区銀座10-20"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
@@ -732,7 +743,7 @@
                     android:maxLines="5"
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
-                    android:textColor="@color/text_first"/>
+                    android:textColor="@color/text_first" android:layout_marginEnd="36dp"/>
 
         </LinearLayout>
 
@@ -754,7 +765,7 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:gravity="center"
-                    android:id="@+id/textView2"
+                    android:id="@+id/btn_submit"
                     android:textSize="16sp"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"/>

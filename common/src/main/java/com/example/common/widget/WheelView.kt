@@ -14,7 +14,7 @@ import android.graphics.Paint.Align
 
 
 /**
- * 来自https://blog.csdn.net/weixin_41454168/article/details/79541354
+ * from website https://blog.csdn.net/weixin_41454168/article/details/79541354
  * */
 class WheelView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
     /**
@@ -86,9 +86,9 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         mSelectListener?.onSelect(mDataList!![mCurrentSelected])
     }
 
-    fun setData(datas: MutableList<String>) {
-        mDataList = datas
-        mCurrentSelected = datas.size / 2
+    fun setData(data: MutableList<String>) {
+        mDataList = data
+        mCurrentSelected = data.size / 2
         invalidate()
     }
 
@@ -96,7 +96,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         mDataList?.indexOf(str)?.let { setSelected(it) }
     }
 
-    fun setSelected(selected: Int) {
+    private fun setSelected(selected: Int) {
         mCurrentSelected = selected
     }
 
@@ -107,7 +107,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
     }
 
     private fun moveTailToHead() {
-        val tail = mDataList!!.get(mDataList!!.size - 1)
+        val tail = mDataList!![mDataList!!.size - 1]
         mDataList!!.removeAt(mDataList!!.size - 1)
         mDataList!!.add(0, tail)
     }
@@ -132,7 +132,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         mPaint!!.color = mColorText
     }
 
-    protected override fun onDraw(canvas: Canvas) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // 根据index绘制view
         if (isInit)
@@ -149,7 +149,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         val x = (mViewWidth / 2.0).toFloat()
         val y = (mViewHeight / 2.0 + mMoveLen).toFloat()
         val fmi = mPaint?.fontMetricsInt
-        val baseline = (y - (fmi!!.bottom / 2.0 + fmi!!.top / 2.0)).toFloat()
+        val baseline = (y - (fmi!!.bottom / 2.0 + fmi.top / 2.0)).run { toFloat() }
 
         mPaint?.let { canvas.drawText(mDataList!![mCurrentSelected], x, baseline, it) }
         // 绘制上方data
@@ -205,11 +205,12 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         return if (f < 0) 0f else f
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> doDown(event)
             MotionEvent.ACTION_MOVE -> doMove(event)
-            MotionEvent.ACTION_UP -> doUp(event)
+            MotionEvent.ACTION_UP -> doUp()
         }
         return true
     }
@@ -240,7 +241,7 @@ class WheelView(context: Context, attributeSet: AttributeSet) : View(context, at
         invalidate()
     }
 
-    private fun doUp(event: MotionEvent) {
+    private fun doUp() {
         // 抬起手后mCurrentSelected的位置由当前位置move到中间选中位置
         if (Math.abs(mMoveLen) < 0.0001) {
             mMoveLen = 0f

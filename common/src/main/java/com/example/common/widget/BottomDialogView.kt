@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import com.example.common.R
 
 abstract class BottomDialogView(context: Context) : AlertDialog(context, R.style.MyDialog) {
 
     abstract var bView: View
+    lateinit var btnFinish:TextView
+    lateinit var listener: OnMyClickListener
 
     private var bIsCanCancel: Boolean = false
     private var bIsBackCancelable: Boolean = false
@@ -27,6 +30,27 @@ abstract class BottomDialogView(context: Context) : AlertDialog(context, R.style
         params!!.width = WindowManager.LayoutParams.MATCH_PARENT
         params.height = WindowManager.LayoutParams.WRAP_CONTENT
         window.attributes = params
+        btnFinish = bView.findViewById(R.id.btn_finish)
+
+        btnFinish.setOnClickListener {
+            this.hide()
+            listener.onFinishClick()
+        }
+
+        initView()
+
+
+    }
+
+    abstract fun initView()
+
+
+    fun setOnClickListener(listener: OnMyClickListener){
+        this.listener = listener
+    }
+
+    interface OnMyClickListener {
+        fun onFinishClick()
     }
 
 

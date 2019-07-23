@@ -42,11 +42,13 @@
                     android:text="仕事内容タイトル "
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
                     android:textColor="@color/text_tip"
                     android:id="@+id/tv_txt_title"
-                    android:layout_weight="0" android:textStyle="bold"/>
+                    android:layout_weight="0"
+                    android:textStyle="bold"/>
             <TextView
                     android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
                     android:layout_width="match_parent"
@@ -72,6 +74,7 @@
                     android:textColor="@color/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:id="@+id/tv_option"
                     android:textAlignment="center"
                     android:lineSpacingExtra="2dp"
@@ -81,11 +84,13 @@
                     android:text="　　 　    　   テスト拠点名（最大項目）（必須項目）最大50文字 改行します。（株式会社ジャーナルネット（全項目））"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
                     android:paddingTop="2dp"
                     android:paddingRight="4dp"
                     android:id="@+id/tv_name"
                     android:lineSpacingExtra="8sp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:paddingEnd="4dp"/>
         </FrameLayout>
         <LinearLayout
                 android:id="@+id/lin_type"
@@ -113,10 +118,11 @@
                     android:layout_marginLeft="8dp"
                     android:id="@+id/tv_phrase"
                     android:textColor="@color/text_first"
+                    android:inputType="textMultiLine"
                     android:textSize="16sp"
-                    android:maxLines="10"
                     android:singleLine="false"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -160,20 +166,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:layout_weight="0">
+                        android:layout_weight="0"
+                        tools:ignore="NestedWeights">
                     <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             app:srcCompat="@drawable/icn_typeofjob_detail"
-                            android:id="@+id/dsfgv"
-                            android:layout_weight="0"/>
+                            android:id="@+id/d"
+                            android:layout_weight="0"
+                            tools:ignore="NestedWeights"/>
                     <TextView
                             android:text="IT・エンジニア系（システ …"
                             android:singleLine="true"
                             android:textColor="@color/text_first"
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/tv_occg_name" android:layout_weight="0"/>
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_occg_name"
+                            android:layout_weight="0"
+                            android:layout_marginStart="4dp"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -195,8 +206,10 @@
                             android:maxLength="5000"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_sal" android:layout_weight="0"
-                            android:textStyle="bold" android:layout_marginStart="4dp"/>
+                            android:id="@+id/tv_sal"
+                            android:layout_weight="0"
+                            android:textStyle="bold"
+                            android:layout_marginStart="4dp"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -215,10 +228,15 @@
                                 android:text="京都府京都市北区 その他 …"
                                 android:singleLine="true"
                                 android:layout_marginLeft="4dp"
+                                android:inputType="textMultiLine"
+                                android:maxLength="100"
                                 android:textColor="@color/text_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/tv_pref" android:layout_weight="0"/>
+                                android:id="@+id/tv_pref"
+                                android:layout_weight="0"
+                                android:layout_marginStart="4dp"
+                                tools:ignore="NestedWeights,TextViewEdits"/>
                         <TextView
                                 android:text="最寄駅：京都、九条（京都 …"
                                 android:singleLine="true"
