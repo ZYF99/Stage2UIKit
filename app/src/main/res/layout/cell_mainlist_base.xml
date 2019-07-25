@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:background="@drawable/selector_cell"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:foreground="@drawable/selector_cell_click"
+        android:focusable="true"
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,38 +18,20 @@
             android:orientation="vertical"
             android:background="@drawable/bg_gradual_cell_main">
 
-        <LinearLayout
-                android:orientation="horizontal"
+        <TextView
+                android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:singleLine="true"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:background="@color/colorPrimary"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/linearLayout">
-            <TextView
-                    android:text="仕事内容タイトル "
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:textColor="@color/text_tip"
-                    android:id="@+id/tv_txt_title"
-                    android:layout_weight="0" android:textStyle="bold"/>
-            <TextView
-                    android:text="仕事内容本文本文本文本文本文本文本文本文本文本 …"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:textColor="@color/text_tip"
-                    android:id="@+id/tv_txt"
-            />
-        </LinearLayout>
+                android:background="@color/colorAccent"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/text_tip"
+                android:id="@+id/base_tv_title"
+                android:layout_weight="0"
+        />
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,9 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="4dp"
-                    android:id="@+id/tv_name"
+                    android:id="@+id/base_tv_sub"
                     android:lineSpacingExtra="2dp"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:paddingEnd="4dp"
+                    tools:ignore="RtlSymmetry"/>
         </FrameLayout>
         <LinearLayout
                 android:id="@+id/lin_type"
@@ -79,7 +64,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="12dp"
-                android:layout_marginEnd="12dp" android:gravity="center_vertical">
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical">
             <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -90,12 +76,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:id="@+id/tv_adtext"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/tv_phrase"
                     android:textColor="@color/text_first"
                     android:textSize="16sp"
                     android:maxLines="10"
                     android:singleLine="false"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -134,7 +121,10 @@
                             android:textColor="@color/text_first"
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:id="@+id/tv_occg_name" android:layout_weight="0"/>
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_occg_name"
+                            android:layout_weight="0"
+                            android:layout_marginStart="4dp"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -155,8 +145,10 @@
                             android:layout_marginLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_sal" android:layout_weight="0"
-                            android:textStyle="bold"/>
+                            android:id="@+id/tv_sal"
+                            android:layout_weight="0"
+                            android:textStyle="bold"
+                            android:layout_marginStart="4dp"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -179,35 +171,32 @@
                                 android:textColor="@color/text_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/tv_pref" android:layout_weight="0"/>
+                                android:id="@+id/tv_pref"
+                                android:layout_weight="0"
+                                tools:ignore="NestedWeights"/>
                         <TextView
                                 android:text="最寄駅：京都、九条（京都 …"
                                 android:singleLine="true"
                                 android:textColor="@color/text_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/tv_station_name" android:layout_weight="0"/>
+                                android:id="@+id/tv_station_name"
+                                android:layout_weight="0"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <ImageView
-                    android:layout_width="8dp"
+                    android:layout_width="15dp"
                     android:rotation="-90"
-                    android:layout_height="13dp" app:srcCompat="@drawable/icn_chevron_down_gay"
-                    android:id="@+id/worksta_btn_next" android:layout_weight="0"/>
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    app:srcCompat="@drawable/icn_chevron_down_gay"
+                    android:id="@+id/worksta_btn_next"
+                    android:layout_weight="0"/>
         </LinearLayout>
 
 
-        <TextView
-                android:text="本日掲載終了予定"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_warning_end"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginStart="12dp"
-                android:textColor="@color/text_warning"
-                android:textStyle="bold"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -220,19 +209,73 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="12dp"
                 android:layout_marginEnd="12dp"
-                android:gravity="center_vertical">
+                android:gravity="bottom">
 
 
-            <TextView
-                    android:text="[掲載終了日] 2020年12月31日"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="1dp"
-                    android:id="@+id/tv_endtime_txt"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_second"
-                    android:textSize="12sp"/>
+                    android:layout_marginTop="11dp"
+                    android:layout_weight="1">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:visibility="visible"
+                        android:id="@+id/lin_pubend"
+                        tools:ignore="NestedWeights">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
+                            app:srcCompat="@drawable/icn_hourglass"
+                            android:paddingTop="1dp"
+                            android:id="@+id/imageView"
+                            android:layout_weight="0"
+                            android:scaleType="centerCrop"/>
+                    <TextView
+                            android:text="掲載終了まであと"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_endtime_txt"
+                            android:layout_weight="0"
+                            android:textColor="@color/text_first"
+                            android:textSize="12sp" android:textStyle="bold"/>
+                    <TextView
+                            android:text="3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_pubend_day"
+                            android:layout_weight="0"
+                            android:textSize="12sp" android:textColor="@android:color/holo_red_dark"
+                            android:textStyle="bold"/>
+                    <TextView
+                            android:text="日"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/tv_endtime_ri"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_first" android:textSize="12sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <TextView
+                        android:text="本日掲載終了予定"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:id="@+id/tv_endtoday"
+                        android:layout_weight="0"
+                        android:textColor="@color/text_warning"
+                        android:textSize="12sp" android:visibility="visible" android:textStyle="bold"/>
+                <TextView
+                        android:text="[掲載終了日] 2020年12月31日"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/tv_pubend"
+                        android:layout_weight="0"
+                        android:textColor="@color/text_second"
+                        android:textSize="12sp"
+                        android:visibility="visible"/>
+            </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
@@ -242,13 +285,14 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:layout_weight="0"
-                    android:background="@drawable/bg_btn_keep_rect_end"
+                    android:layout_gravity="center"
+                    android:background="@drawable/selector_btn_keep"
                     android:id="@+id/btn_keep"
                     android:gravity="center">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/icn_kept_on_btn"
+                        app:srcCompat="@drawable/icn_keep_border_yellow"
                         android:id="@+id/imageView4"
                         android:layout_weight="1"/>
                 <TextView

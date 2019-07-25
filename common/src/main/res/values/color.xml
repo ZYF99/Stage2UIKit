@@ -30,6 +30,14 @@
     <color name="text_inputLin_error">#EA5050</color>
 
 
+    <color name="colorBackClick">#90F5A623</color>
+
+
+    <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+
+
 
 
     <color name="gang">#F3F3F3</color>

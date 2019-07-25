@@ -47,5 +47,23 @@ ext{
     glideVersion = '3.7.0'
     glideTransformationsVersion = '2.0.2'
     gpuimageVersion = '1.4.1'
+
+    //RxJava
+    RxJavaVersion = '2.1.0'
+    //RxAndroid
+    RxAndroidVersion = '2.0.1'
+    //retrofit
+    retrofitVersion = '2.3.0'
+    //adapter-RxJava2
+    adapter_RxJava2Version = '2.3.0'
+    //gson
+    gsonVersion = '2.3.0'
+    //http-logging
+    logginVersion = '3.8.1'
+
+
+
+
+
 }
 

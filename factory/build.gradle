@@ -35,6 +35,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.RxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.RxAndroidVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.adapter_RxJava2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.gsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.logginVersion"
+
 }
 repositories {
     mavenCentral()

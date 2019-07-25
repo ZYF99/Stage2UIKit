@@ -2,6 +2,9 @@ package com.example.common.utils
 
 import java.util.regex.Pattern
 
+class JudgeUtil {
+
+    companion object{
 
         fun isEmail(email: String): Boolean {
             val str =
@@ -10,4 +13,8 @@ import java.util.regex.Pattern
             val m = p.matcher(email)
             return m.matches()
         }
+
+    }
+
+}
 

@@ -9,10 +9,14 @@ import android.widget.TextView
 import com.example.common.R
 
 
-const val MAN = 0
-const val WOMAN = 1
+
 
 class SexBox(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+
+    companion object{
+        const val MAN = 0
+        const val WOMAN = 1
+    }
 
     private var isMan = false
     private var isWoman = false

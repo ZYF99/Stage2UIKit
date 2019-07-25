@@ -4,9 +4,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:gravity="center">
     droid:id="@+id/textView2"/>
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBack"
-            android:id="@+id/mainrec"/>
+            android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBack"
+                android:id="@+id/mainrec"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

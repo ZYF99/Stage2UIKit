@@ -1,4 +1,4 @@
-package com.example.common
+package com.example.common.app
 
 import android.app.Activity
 import android.content.Context
@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.factory.presenter.BasePresenter
 
 abstract class BaseFragment : Fragment() {
 
     abstract val layoutId: Int
-
+    abstract val presenter: BasePresenter
 
     //create view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,8 +32,6 @@ abstract class BaseFragment : Fragment() {
 
     //something init before initWidget
     open fun initBefore() {
-
-
     }
 
 
