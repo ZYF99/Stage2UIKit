@@ -18,6 +18,7 @@ class MainPresenter(val view: IMainView) : BasePresenter(), IMainPresenter {
             }
 
             override fun onNext(t: List<Job>) {
+                print(t)
                 t.map {
                     if (SharedPreferencesUtil.getListData("collections", String::class.java).contains(it.id))
                         it.isCollected = true

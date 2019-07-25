@@ -18,6 +18,7 @@ class ImagePagerAdapter(val context:Context, private val imgs :List<Job.Img>, pr
     }
 
     override fun getCount(): Int {
+        println("stationCount${imgs.size}")
         return Int.MAX_VALUE
     }
 
@@ -25,7 +26,6 @@ class ImagePagerAdapter(val context:Context, private val imgs :List<Job.Img>, pr
         val imageView = ImageView(context)
         if(imgs.isNotEmpty()){
             val item = imgs[position%imgs.size].url
-
 
             //存列表
             imgViews.add(imageView)

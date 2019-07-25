@@ -114,6 +114,75 @@ class JobListAdapter(private val context: Context, private var list: MutableList
             }
         }
 
+        //workstation block
+        oldStationPage = -1
+        val stationAdapter = ImagePagerAdapter(context, item.img, holder.stationPager)
+        holder.stationPager.adapter = stationAdapter
+
+        //photography banner
+        //jobList with fragment
+
+        val prList = mutableListOf<PhotographyFragment>()
+        item.img_pr.map {
+            prList.add(PhotographyFragment(it))
+        }
+
+        val adapterPhotography = PhotographyAdapter(context, prList)
+        holder.photographyPager.adapter = adapterPhotography
+        //station block
+        //init stationBtn
+        if (item.img.size <= 1) holder.btnStationNext.visibility = View.INVISIBLE
+        //workstation btnNext click event
+        holder.btnStationNext.setOnClickListener {
+            //do workstation imageList loop
+            val current = holder.stationPager.currentItem
+            when {
+                current > oldStationPage -> {
+                    when {
+                        current + 1 > item.img.size - 1 -> holder.stationPager.currentItem =
+                            current - 1
+                        else -> holder.stationPager.currentItem = current + 1
+                    }
+                }
+                else -> {
+                    when {
+                        current - 1 < 0 -> holder.stationPager.currentItem = current + 1
+                        else -> holder.stationPager.currentItem = current - 1
+                    }
+                }
+            }
+            oldStationPage = current
+        }
+
+        //pr block
+        //init PrBtn
+        holder.btnPrLast.visibility = View.INVISIBLE
+        if (item.img_pr.size <= 1) holder.btnPrNext.visibility = View.INVISIBLE
+        //pr btn click event -> last
+        holder.btnPrNext.setOnClickListener {
+            //check if it can click next
+            if (holder.photographyPager.currentItem + 1 <= item.img_pr.size - 1) {
+                holder.photographyPager.currentItem += 1
+                holder.btnPrLast.visibility = View.VISIBLE
+                //check if it has more, no:hide the btnNext
+                if (holder.photographyPager.currentItem + 1 > item.img_pr.size - 1) {
+                    holder.btnPrNext.visibility = View.INVISIBLE
+                }
+            }
+        }
+        //pr btn click event -> next
+        holder.btnPrLast.setOnClickListener {
+            //check if it has last
+            if (holder.photographyPager.currentItem - 1 >= 0) {
+                holder.photographyPager.currentItem -= 1
+                holder.btnPrNext.visibility = View.VISIBLE
+                //check if it has last, no:hide the btnLast
+                if (holder.photographyPager.currentItem - 1 < 0) {
+                    holder.btnPrLast.visibility = View.INVISIBLE
+                }
+            }
+        }
+
 
 
         when (holder) {
@@ -131,70 +200,10 @@ class JobListAdapter(private val context: Context, private var list: MutableList
                 holder.tvOption.text = item.option
                 holder.tvSub.text = "　　 　    　   ${item.sub.name + "(" + item.master.name + ")"}"
 
-                //workstation block
-                oldStationPage = -1
-                val stationAdapter = ImagePagerAdapter(context, item.img, holder.stationPager)
-                holder.stationPager.adapter = stationAdapter
-                //photography banner
-                //jobList with fragment
-                val list = item.img_pr.map {
-                    PhotographyFragment(it)
-                }
-                val adapterPhotography = PhotographyAdapter(context, list)
-                holder.photographyPager.adapter = adapterPhotography
-                //station block
-                //init stationBtn
-                if (item.img.size <= 1) holder.btnStationNext.visibility = View.INVISIBLE
-                //workstation btnNext click event
-                holder.btnStationNext.setOnClickListener {
-                    //do workstation imageList loop
-                    val current = holder.stationPager.currentItem
-                    when {
-                        current > oldStationPage -> {
-                            when {
-                                current + 1 > item.img.size - 1 -> holder.stationPager.currentItem =
-                                    current - 1
-                                else -> holder.stationPager.currentItem = current + 1
-                            }
-                        }
-                        else -> {
-                            when {
-                                current - 1 < 0 -> holder.stationPager.currentItem = current + 1
-                                else -> holder.stationPager.currentItem = current - 1
-                            }
-                        }
-                    }
-                    oldStationPage = current
-                }
 
-                //pr block
-                //init PrBtn
-                holder.btnPrLast.visibility = View.INVISIBLE
-                if (item.img_pr.size <= 1) holder.btnPrNext.visibility = View.INVISIBLE
-                //pr btn click event -> last
-                holder.btnPrNext.setOnClickListener {
-                    //check if it can click next
-                    if (holder.photographyPager.currentItem + 1 <= item.img_pr.size - 1) {
-                        holder.photographyPager.currentItem += 1
-                        holder.btnPrLast.visibility = View.VISIBLE
-                        //check if it has more, no:hide the btnNext
-                        if (holder.photographyPager.currentItem + 1 > item.img_pr.size - 1) {
-                            holder.btnPrNext.visibility = View.INVISIBLE
-                        }
-                    }
-                }
-                //pr btn click event -> next
-                holder.btnPrLast.setOnClickListener {
-                    //check if it has last
-                    if (holder.photographyPager.currentItem - 1 >= 0) {
-                        holder.photographyPager.currentItem -= 1
-                        holder.btnPrNext.visibility = View.VISIBLE
-                        //check if it has last, no:hide the btnLast
-                        if (holder.photographyPager.currentItem - 1 < 0) {
-                            holder.btnPrLast.visibility = View.INVISIBLE
-                        }
-                    }
-                }
+
+
+
             }
         }
     }
@@ -214,13 +223,6 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         val tvOption: TextView by bindView(R.id.tv_option)
         val tvSub: TextView by bindView(R.id.tv_sub)
 
-
-        val stationPager: ViewPager by bindView(R.id.cell_new_pager_workstation)
-        val btnStationNext: TextView by bindView(R.id.btn_station_next)
-        val photographyPager: ViewPager by bindView(R.id.cell_new_pager_photography)
-
-        val btnPrLast: ImageView by bindView(R.id.btn_photography_last)
-        val btnPrNext: ImageView by bindView(R.id.btn_photography_next)
 
     }
 
@@ -247,6 +249,14 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         val tvPubend: TextView by bindView(R.id.tv_pubend)
 
         val btnKeep: LinearLayout by bindView(R.id.btn_keep)
+
+        val stationPager: ViewPager by bindView(R.id.cell_pager_workstation)
+        val btnStationNext: TextView by bindView(R.id.btn_station_next)
+        val photographyPager: ViewPager by bindView(R.id.cell_pager_photography)
+
+        val btnPrLast: ImageView by bindView(R.id.btn_photography_last)
+        val btnPrNext: ImageView by bindView(R.id.btn_photography_next)
+
 
     }
 

@@ -139,9 +139,8 @@
                 <androidx.viewpager.widget.ViewPager
                         android:layout_width="120dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/bg_404"
                         android:layout_weight="1"
-                        android:id="@+id/cell_new_pager_workstation">
+                        android:id="@+id/cell_pager_workstation">
                 </androidx.viewpager.widget.ViewPager>
                 <TextView
                         android:text="次の画像"
@@ -400,9 +399,8 @@
             <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:background="@drawable/bg_404"
                     android:layout_weight="1"
-                    android:id="@+id/cell_new_pager_photography">
+                    android:id="@+id/cell_pager_photography">
             </androidx.viewpager.widget.ViewPager>
             <ImageView
                     android:layout_width="wrap_content"
