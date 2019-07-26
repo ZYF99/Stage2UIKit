@@ -26,6 +26,7 @@ class MainFragment : BaseFragment(), IMainView, JobListAdapter.Listener {
         jobListAdapter = JobListAdapter(context!!, list, this)
         mainrec.layoutManager = LinearLayoutManager(context)
         mainrec.adapter = jobListAdapter
+        refreshlayout.setColorSchemeResources(R.color.colorAccent)
         refreshlayout.setOnRefreshListener {
             presenter.getJobList(0)
         }

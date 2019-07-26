@@ -1,8 +1,6 @@
 package com.example.factory.net
 
 import com.example.factory.data.Job
-import com.example.factory.net.model.RspModel
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

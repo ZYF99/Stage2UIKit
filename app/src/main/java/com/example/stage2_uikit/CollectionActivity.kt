@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.app.BaseActivity
 import com.example.factory.data.Job
-import com.example.factory.presenter.BasePresenter
 import com.example.factory.presenter.collection.CollectionPresenter
 import com.example.factory.presenter.collection.ICollectionView
 import com.example.stage2_uikit.main.JobListAdapter
@@ -37,16 +36,19 @@ class CollectionActivity : BaseActivity(), ICollectionView, JobListAdapter.Liste
         presenter.refreshList()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onRefreshList(list: List<Job>) {
-
+        jobListAdapter.replaceAll(list)
+        tv_title_sec.text = "${list.size}件"
     }
 
     @SuppressLint("SetTextI18n")
     override fun onAddItem(job: Job) {
         jobListAdapter.addItem(job)
-        tv_title_sec.text = "${presenter.jobList.size}件"
+
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onRemove(job: Job) {
         jobListAdapter.removeItem(job)
         tv_title_sec.text = "${presenter.jobList.size}件"

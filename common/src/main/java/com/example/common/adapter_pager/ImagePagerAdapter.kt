@@ -18,8 +18,12 @@ class ImagePagerAdapter(val context:Context, private val imgs :List<Job.Img>, pr
     }
 
     override fun getCount(): Int {
-        println("stationCount${imgs.size}")
-        return Int.MAX_VALUE
+        return if(imgs.size>1){
+            Int.MAX_VALUE
+        }else{
+            imgs.size
+        }
+
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -32,7 +36,7 @@ class ImagePagerAdapter(val context:Context, private val imgs :List<Job.Img>, pr
             //放在pager中
             pager.addView(imageView)
 
-            Glide.with(context).load(item).crossFade().into(imageView)
+            Glide.with(context).load(item).crossFade().centerCrop().into(imageView)
 
         }
 

@@ -1,7 +1,6 @@
 package com.example.factory.presenter.main
 
 import com.example.factory.data.Job
-import com.example.factory.net.model.RspModel
 
 interface IMainView {
 

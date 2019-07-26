@@ -15,44 +15,39 @@ import com.example.factory.data.Job
 import com.example.stage2_uikit.R
 import kotterknife.bindView
 
-class JobListAdapter(private val context: Context, private var list: MutableList<Job>, val listener: Listener) :
+class JobListAdapter(private val context: Context, private var list: MutableList<Job>, private val listener: Listener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val BASEVIEW = 0
-    private val NEWVIEW = 1
 
     //the last stationImage current position
     private var oldStationPage = -1
 
-
     //ViewHolder Create
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            NEWVIEW -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_mainlist_new, parent, false)
-                ViewHolderOfNew(view)
-            }
-            else -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_mainlist_base, parent, false)
-                ViewHolderOfBase(view)
-            }
-        }
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_jobmainlist, parent, false)
+        return MyViewHolder(view)
     }
 
     //Data binding
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
-        holder as MyBaseViewHolder
-
-        holder.btnKeep.setOnClickListener {
-            listener.onCollectBtnClick(position)
-        }
-
-        if (item.isCollected) {
-            holder.btnKeep.setBackgroundResource(R.drawable.bg_btn_keep_true)
-        } else {
-            holder.btnKeep.setBackgroundResource(R.drawable.bg_btn_keep_false)
+        holder as MyViewHolder
+        when (item.new_flg) {
+            "0" -> {
+                //not new
+                holder.linNew.visibility = View.GONE
+                holder.tvBaseTitle.visibility = View.VISIBLE
+                holder.tvBaseTitle.text = item.txt_title + item.txt
+            }
+            "1" -> {
+                //new
+                holder.linNew.visibility = View.VISIBLE
+                holder.tvBaseTitle.visibility = View.GONE
+                holder.tvNewTitle.text = item.txt_title
+                holder.tvNewTxt.text = item.txt
+                println("itemtxttitle~~" + item.txt_title)
+            }
         }
 
         var imgId = 100
@@ -89,6 +84,17 @@ class JobListAdapter(private val context: Context, private var list: MutableList
             }
         }
 
+        holder.tvOption.text = item.option
+
+        var subText = ""
+        if (item.option.isNotEmpty()) {
+            for (i in 0..item.option.length) {
+                subText += "    "
+            }
+        }
+
+        holder.tvSub.text = "$subText${item.sub.name + "(" + item.master.name + ")"}"
+
         holder.imEmp.setImageResource(imgId)
         holder.tvPhras.text = item.phrase
         holder.tvOccgName.text = item.occ_g.name + "(" + item.occ.name + ")"
@@ -97,8 +103,8 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         var s = ""
         item.station.map { s += it.name }
         holder.tvStationName.text = s
-
-        holder.tvPubend.text = "[掲載終了日]${item.pubend_dat}"
+        val datArr = item.pubend_dat.split("-".toRegex())
+        holder.tvPubend.text = "[掲載終了日]${datArr[0]}年${datArr[1]}月${datArr[2]}日"
 
         when {
             item.pubend_days == "0" -> {
@@ -115,127 +121,130 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         }
 
         //workstation block
-        oldStationPage = -1
-        val stationAdapter = ImagePagerAdapter(context, item.img, holder.stationPager)
-        holder.stationPager.adapter = stationAdapter
-
-        //photography banner
-        //jobList with fragment
-
-        val prList = mutableListOf<PhotographyFragment>()
-        item.img_pr.map {
-            prList.add(PhotographyFragment(it))
-        }
-
-        val adapterPhotography = PhotographyAdapter(context, prList)
-        holder.photographyPager.adapter = adapterPhotography
-        //station block
-        //init stationBtn
-        if (item.img.size <= 1) holder.btnStationNext.visibility = View.INVISIBLE
-        //workstation btnNext click event
-        holder.btnStationNext.setOnClickListener {
-            //do workstation imageList loop
-            val current = holder.stationPager.currentItem
-            when {
-                current > oldStationPage -> {
-                    when {
-                        current + 1 > item.img.size - 1 -> holder.stationPager.currentItem =
-                            current - 1
-                        else -> holder.stationPager.currentItem = current + 1
+        if (item.img.isEmpty()) {
+            holder.linStation.visibility = View.GONE
+        } else {
+            holder.linStation.visibility = View.VISIBLE
+            oldStationPage = -1
+            val stationAdapter = ImagePagerAdapter(context, item.img, holder.stationPager)
+            holder.stationPager.adapter = stationAdapter
+            //init stationBtn
+            if (item.img.size <= 1) {
+                holder.btnStationNext.visibility = View.GONE
+            } else {
+                holder.btnStationNext.visibility = View.VISIBLE
+            }
+            //workstation btnNext click event
+            holder.btnStationNext.setOnClickListener {
+                //do workstation imageList loop
+                val current = holder.stationPager.currentItem
+                when {
+                    current > oldStationPage -> {
+                        when {
+                            current + 1 > item.img.size - 1 -> holder.stationPager.currentItem =
+                                current - 1
+                            else -> holder.stationPager.currentItem = current + 1
+                        }
+                    }
+                    else -> {
+                        when {
+                            current - 1 < 0 -> holder.stationPager.currentItem = current + 1
+                            else -> holder.stationPager.currentItem = current - 1
+                        }
                     }
                 }
-                else -> {
-                    when {
-                        current - 1 < 0 -> holder.stationPager.currentItem = current + 1
-                        else -> holder.stationPager.currentItem = current - 1
+                oldStationPage = current
+            }
+        }
+
+        //photography block
+        if (item.img_pr.isEmpty()) {
+            holder.linPr.visibility = View.GONE
+        } else {
+            holder.linPr.visibility = View.VISIBLE
+            val adapterPhotography = PhotographyAdapter(context, item.img_pr)
+            holder.photographyPager.adapter = adapterPhotography
+            //init PrBtn
+            holder.btnPrLast.visibility = View.INVISIBLE
+            if (item.img_pr.size <= 1) holder.btnPrNext.visibility = View.INVISIBLE
+
+
+            holder.photographyPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+                }
+
+                override fun onPageSelected(position: Int) {
+
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+
+                    //check if it has more, no:hide the btnNext
+                    if (holder.photographyPager.currentItem + 1 > item.img_pr.size - 1) {
+                        holder.btnPrNext.visibility = View.INVISIBLE
+                    }else{
+                        holder.btnPrNext.visibility = View.VISIBLE
+                    }
+                    //check if it has last, no:hide the btnLast
+                    if (holder.photographyPager.currentItem - 1 < 0) {
+                        holder.btnPrLast.visibility = View.INVISIBLE
+                    }else{
+                        holder.btnPrLast.visibility = View.VISIBLE
                     }
                 }
-            }
-            oldStationPage = current
-        }
 
-        //pr block
-        //init PrBtn
-        holder.btnPrLast.visibility = View.INVISIBLE
-        if (item.img_pr.size <= 1) holder.btnPrNext.visibility = View.INVISIBLE
-        //pr btn click event -> last
-        holder.btnPrNext.setOnClickListener {
-            //check if it can click next
-            if (holder.photographyPager.currentItem + 1 <= item.img_pr.size - 1) {
-                holder.photographyPager.currentItem += 1
-                holder.btnPrLast.visibility = View.VISIBLE
-                //check if it has more, no:hide the btnNext
-                if (holder.photographyPager.currentItem + 1 > item.img_pr.size - 1) {
-                    holder.btnPrNext.visibility = View.INVISIBLE
+            })
+
+
+            //pr btn click event -> last
+            holder.btnPrNext.setOnClickListener {
+                //check if it can click next
+                if (holder.photographyPager.currentItem + 1 <= item.img_pr.size - 1) {
+                    holder.photographyPager.currentItem += 1
+                    holder.btnPrLast.visibility = View.VISIBLE
                 }
             }
-        }
-        //pr btn click event -> next
-        holder.btnPrLast.setOnClickListener {
-            //check if it has last
-            if (holder.photographyPager.currentItem - 1 >= 0) {
-                holder.photographyPager.currentItem -= 1
-                holder.btnPrNext.visibility = View.VISIBLE
-                //check if it has last, no:hide the btnLast
-                if (holder.photographyPager.currentItem - 1 < 0) {
-                    holder.btnPrLast.visibility = View.INVISIBLE
+            //pr btn click event -> next
+            holder.btnPrLast.setOnClickListener {
+                //check if it has last
+                if (holder.photographyPager.currentItem - 1 >= 0) {
+                    holder.photographyPager.currentItem -= 1
+                    holder.btnPrNext.visibility = View.VISIBLE
                 }
             }
         }
 
+        //collect button click event
+        holder.btnCollect.setOnClickListener {
+            listener.onCollectBtnClick(position)
+        }
+
+        if (item.isCollected) {
 
 
-        when (holder) {
-            //base type item
-            is ViewHolderOfBase -> {
-                holder.tvTitle.text = item.txt_title + item.txt
-                holder.tvSub.text = item.sub.name + "(" + item.master.name + ")"
-            }
-            //new type item
-            is ViewHolderOfNew -> {
+            holder.btnCollect.setBackgroundResource(R.drawable.bg_btn_keep_true)
+        } else {
 
-                holder.tvTxtTitle.text = item.txt_title
-                holder.tvTxt.text = item.txt
-
-                holder.tvOption.text = item.option
-                holder.tvSub.text = "　　 　    　   ${item.sub.name + "(" + item.master.name + ")"}"
-
-
-
-
-
-            }
+            holder.btnCollect.setBackgroundResource(R.drawable.bg_btn_keep_false)
         }
     }
 
-    //Getting item types based on filter:isNew
-    override fun getItemViewType(position: Int): Int {
-        return when {
-            list[position].new_flg == "1" -> NEWVIEW
-            else -> BASEVIEW
-        }
-    }
 
-    class ViewHolderOfNew(itemView: View) : MyBaseViewHolder(itemView) {
+    open class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val tvTxtTitle: TextView by bindView(R.id.tv_txt)
-        val tvTxt: TextView by bindView(R.id.tv_txt)
-        val tvOption: TextView by bindView(R.id.tv_option)
+        //new
+        val linNew: LinearLayout by bindView(R.id.lin_new)
+        val tvNewTitle: TextView by bindView(R.id.new_tv_title)
+        val tvNewTxt: TextView by bindView(R.id.new_tv_txt)
+
+        //not new
+        val tvBaseTitle: TextView by bindView(R.id.base_tv_title)
+
+
+        //base
         val tvSub: TextView by bindView(R.id.tv_sub)
-
-
-    }
-
-    class ViewHolderOfBase(itemView: View) : MyBaseViewHolder(itemView) {
-
-        val tvTitle: TextView by bindView(R.id.base_tv_title)
-        val tvSub: TextView by bindView(R.id.base_tv_sub)
-
-
-    }
-
-    open class MyBaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        val tvOption: TextView by bindView(R.id.tv_option)
         val imEmp: ImageView by bindView(R.id.im_emp)
         val tvPhras: TextView by bindView(R.id.tv_phrase)
         val tvOccgName: TextView by bindView(R.id.tv_occg_name)
@@ -248,15 +257,18 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         val tvPubendDay: TextView by bindView(R.id.tv_pubend_day)
         val tvPubend: TextView by bindView(R.id.tv_pubend)
 
-        val btnKeep: LinearLayout by bindView(R.id.btn_keep)
 
+        val linStation: LinearLayout by bindView(R.id.lin_station)
         val stationPager: ViewPager by bindView(R.id.cell_pager_workstation)
         val btnStationNext: TextView by bindView(R.id.btn_station_next)
-        val photographyPager: ViewPager by bindView(R.id.cell_pager_photography)
 
+        val linPr: LinearLayout by bindView(R.id.lin_photography)
+        val photographyPager: ViewPager by bindView(R.id.cell_pager_photography)
         val btnPrLast: ImageView by bindView(R.id.btn_photography_last)
         val btnPrNext: ImageView by bindView(R.id.btn_photography_next)
 
+        //val imCollect: ImageView by bindView(R.id.im_collect)
+        val btnCollect: LinearLayout by bindView(R.id.btn_keep)
 
     }
 
@@ -293,7 +305,6 @@ class JobListAdapter(private val context: Context, private var list: MutableList
 
         notifyDataSetChanged()
     }
-
 
     interface Listener {
         fun onCollectBtnClick(pos: Int)
