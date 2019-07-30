@@ -41,8 +41,8 @@
                 android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"/>
         <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 app:srcCompat="@drawable/icn_kept_on_btn"
                 android:foreground="@drawable/selector_back_click"
                 android:id="@+id/btn_collection"

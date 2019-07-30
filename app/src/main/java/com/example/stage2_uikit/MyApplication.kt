@@ -6,27 +6,67 @@ import androidx.annotation.StringRes
 import com.example.factory.net.NetWorkManager
 import com.example.factory.utils.SharedPreferencesUtil
 
-open class MyApplication: Application() {
+class MyApplication: Application() {
 
 
     companion object {
-        /*instance object*/
+
         @Volatile
-        private var INSTANCE: MyApplication? = null
+        var INSTANCE: MyApplication? = null
+        /*instance object*/
+        private var instance:MyApplication? = null
+        get() {
+            if(INSTANCE == null){
+                INSTANCE = MyApplication()
+            }
+            return INSTANCE
+        }
+        fun get():MyApplication{
+
+            return instance!!
+        }
+
+        /**
+         * show a Toast
+         *
+         * @param msg string
+         */
+        private fun showToast(msg: String) {
+
+
+            Toast.makeText(get(), msg, Toast.LENGTH_SHORT).show()
+
+
+        }
+
+        /**
+         * show a Toast
+         *
+         * @param msgId msg resource
+         */
+        fun showToast(@StringRes msgId: Int) {
+            showToast(get().getString(msgId))
+        }
+
 
         /*get instance*/
-        val instance: MyApplication
+/*        private val instance: MyApplication
             get() {
                 if (INSTANCE == null) {
                     synchronized(MyApplication::class.java) {
                         if (INSTANCE == null) {
                             INSTANCE =
-                                MyApplication()
+
                         }
                     }
                 }
                 return INSTANCE!!
-            }
+            }*/
+
+
+
+
+
     }
 
     override fun onCreate() {
@@ -35,26 +75,7 @@ open class MyApplication: Application() {
         NetWorkManager.instance.init()
     }
 
-    /**
-     * show a Toast
-     *
-     * @param msg string
-     */
-    fun showToast(msg: String) {
 
 
-                Toast.makeText(instance, msg, Toast.LENGTH_SHORT).show()
-
-
-    }
-
-    /**
-     * show a Toast
-     *
-     * @param msgId msg resource
-     */
-    fun showToast(@StringRes msgId: Int) {
-        showToast(instance.getString(msgId))
-    }
 
 }

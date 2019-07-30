@@ -1,10 +1,21 @@
 package com.example.factory.presenter.collection
 
+import com.example.factory.data.Job
+import io.reactivex.Single
+import io.reactivex.SingleObserver
+
 
 interface ICollection {
 
-    fun refreshList()
+    interface View{
+        fun onRemove(job: Job)
+    }
+    interface Presenter{
 
-    fun deleteItem(pos:Int)
+        fun refreshListRx(singleObserver: SingleObserver<List<Job>>):Single<List<Job>>
+
+        fun deleteItem(pos:Int)
+    }
+
 
 }

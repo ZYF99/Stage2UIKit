@@ -224,9 +224,11 @@ class JobListAdapter(private val context: Context, private var list: MutableList
 
             holder.tvCollect.text = "キープ中"
             holder.btnCollect.setBackgroundResource(R.drawable.bg_btn_keep_true)
+            holder.imCollect.setImageResource(R.drawable.icn_kept_on_btn)
         } else {
             holder.tvCollect.text = "キープする"
             holder.btnCollect.setBackgroundResource(R.drawable.bg_btn_keep_false)
+            holder.imCollect.setImageResource(R.drawable.icn_keep_border_yellow)
         }
     }
 
@@ -267,7 +269,7 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         val btnPrLast: ImageView by bindView(R.id.btn_photography_last)
         val btnPrNext: ImageView by bindView(R.id.btn_photography_next)
 
-        //val imCollect: ImageView by bindView(R.id.im_collect)
+        val imCollect: ImageView by bindView(R.id.im_collect)
         val tvCollect: TextView by bindView(R.id.tv_collect)
         val btnCollect: LinearLayout by bindView(R.id.btn_keep)
 

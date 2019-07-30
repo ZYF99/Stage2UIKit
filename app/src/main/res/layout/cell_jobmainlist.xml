@@ -38,8 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+
                     android:background="@color/colorPrimary"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -147,12 +146,10 @@
                     android:layout_marginLeft="8dp"
                     android:id="@+id/tv_phrase"
                     android:textColor="@color/text_first"
-                    android:inputType="textMultiLine"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:textStyle="bold"
-                    android:layout_marginStart="8dp"
-                    tools:ignore="TextViewEdits"/>
+                    android:layout_marginStart="8dp"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -359,7 +356,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:layout_marginBottom="6dp"
                         android:id="@+id/tv_endtoday"
                         android:layout_weight="0"
                         android:textColor="@color/text_warning"
@@ -370,6 +366,7 @@
                         android:text="[掲載終了日] 2020年12月31日"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
                         android:layout_marginBottom="8dp"
                         android:id="@+id/tv_pubend"
                         android:layout_weight="0"
@@ -379,7 +376,7 @@
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:paddingLeft="12dp"
@@ -388,13 +385,13 @@
                     android:paddingBottom="10dp"
                     android:layout_weight="0"
                     android:background="@drawable/selector_btn_keep"
-                    android:id="@+id/btn_keep">
+                    android:id="@+id/btn_keep" android:gravity="center">
                 <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         app:srcCompat="@drawable/icn_keep_border_yellow"
                         android:id="@+id/im_collect"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         tools:ignore="NestedWeights"/>
                 <TextView
                         android:text="キープする"
@@ -402,7 +399,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_collect"
                         android:layout_weight="1"
-                        android:textColor="@color/text_first"/>
+                        android:textColor="@color/text_first" android:textStyle="bold"/>
             </LinearLayout>
 
 

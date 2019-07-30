@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.app.BaseActivity
 import com.example.factory.data.Job
 import com.example.factory.presenter.collection.CollectionPresenter
-import com.example.factory.presenter.collection.ICollectionView
+import com.example.factory.presenter.collection.ICollection
 import com.example.stage2_uikit.main.JobListAdapter
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_collection.*
 
-class CollectionActivity : BaseActivity(), ICollectionView, JobListAdapter.Listener {
+class CollectionActivity : BaseActivity(), ICollection.View, JobListAdapter.Listener {
 
     override val presenter = CollectionPresenter(this)
 
@@ -27,25 +29,25 @@ class CollectionActivity : BaseActivity(), ICollectionView, JobListAdapter.Liste
         btn_back.setOnClickListener {
             finish()
         }
-        initList()
+        refreshList()
     }
 
 
     //listChanged CallBack
-    private fun initList() {
-        presenter.refreshList()
-    }
+    private fun refreshList() {
+        presenter.refreshListRx(object : SingleObserver<List<Job>> {
+            @SuppressLint("SetTextI18n")
+            override fun onSuccess(newList: List<Job>) {
+                newList.map {
+                    it.isCollected = true
+                }
+                jobListAdapter.replaceAll(newList)
+                tv_title_sec.text = "${newList.size}件"
+            }
 
-    @SuppressLint("SetTextI18n")
-    override fun onRefreshList(list: List<Job>) {
-        jobListAdapter.replaceAll(list)
-        tv_title_sec.text = "${list.size}件"
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onAddItem(job: Job) {
-        jobListAdapter.addItem(job)
-
+            override fun onSubscribe(d: Disposable) {}
+            override fun onError(e: Throwable) {}
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -54,10 +56,7 @@ class CollectionActivity : BaseActivity(), ICollectionView, JobListAdapter.Liste
         tv_title_sec.text = "${presenter.jobList.size}件"
     }
 
-
     override fun onCollectBtnClick(pos: Int) {
         presenter.deleteItem(pos)
     }
-
-
 }

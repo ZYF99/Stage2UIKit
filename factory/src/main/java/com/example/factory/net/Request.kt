@@ -2,6 +2,7 @@ package com.example.factory.net
 
 import com.example.factory.data.Job
 import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import retrofit2.http.GET
 import retrofit2.http.Query
 

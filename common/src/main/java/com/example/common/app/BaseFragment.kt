@@ -55,5 +55,11 @@ abstract class BaseFragment : Fragment() {
 
     }
 
+    //Fragment's destroy function
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
 
 }

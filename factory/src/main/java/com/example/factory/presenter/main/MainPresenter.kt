@@ -1,50 +1,55 @@
 package com.example.factory.presenter.main
 
+
+import android.annotation.SuppressLint
 import com.example.factory.data.Job
 import com.example.factory.net.NetWorkManager
-import com.example.factory.net.runDisRx
 import com.example.factory.presenter.BasePresenter
-import com.example.factory.utils.SharedPreferencesUtil
-import io.reactivex.observers.DisposableObserver
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
-class MainPresenter(val view: IMainView) : BasePresenter(), IMainPresenter {
+class MainPresenter(val view: IMain) : BasePresenter(), IMain.Presenter {
 
-    override fun getJobList(offset: Int) {
-        val request = NetWorkManager.getRequest()
-        val disposable =
-            runDisRx(request.getJobList(offset), object : DisposableObserver<List<Job>>() {
-                override fun onComplete() {
-                }
+    val list = mutableListOf<Job>()
 
-                override fun onNext(t: List<Job>) {
-                    print(t)
-                    t.map {
-                        if (SharedPreferencesUtil.getListData("collections", String::class.java).contains(it.id))
-                            it.isCollected = true
-                    }
-                    if (offset == 0) view.refreshJobList(t)
-                    else view.addJobList(t)
-                    println("~~~~~~$t")
-                }
+    override fun intervalTest() {
+        Observable.interval(3, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(object : Observer<Long> {
 
-                override fun onError(e: Throwable) {
-                    println("~~~Error~~~" + e.message)
-                }
-            })
-        disposables.add(disposable)
+            lateinit var disposable: Disposable
+
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: Long) {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
     }
 
-    override fun collectJob(job: Job) {
-        val list = SharedPreferencesUtil.getListData("collections", String::class.java)
-        if (job.isCollected) {
-            list.remove(job.id)
-        } else {
-            list.add(job.id)
-        }
-        SharedPreferencesUtil.putListData("collections", list)
-        view.onTriggerCollect(job)
+    override fun getJobListRx(offset: Int): Observable<List<Job>> {
+        return NetWorkManager.getRequest().getJobList(offset)
     }
 
+    @SuppressLint("CheckResult")
+    override fun collectJobRx(job: Job):Observable<Job>{
+        return Observable.create<Job> { e -> e.onNext(job)  }
+    }
 
 }

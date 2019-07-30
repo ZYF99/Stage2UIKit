@@ -1,34 +1,35 @@
 package com.example.stage2_uikit.main
 
-
 import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.app.BaseFragment
 import com.example.factory.data.Job
-import com.example.factory.presenter.BasePresenter
-import com.example.factory.presenter.main.IMainView
+import com.example.factory.net.runDisRx
+import com.example.factory.presenter.main.IMain
 import com.example.factory.presenter.main.MainPresenter
+import com.example.factory.utils.SharedPreferencesUtil
 import com.example.stage2_uikit.R
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.fragment_main.*
-class MainFragment : BaseFragment(), IMainView, JobListAdapter.Listener {
+
+class MainFragment : BaseFragment(), IMain, JobListAdapter.Listener {
 
     override val presenter = MainPresenter(this)
-
-
     override val layoutId: Int = R.layout.fragment_main
     private lateinit var jobListAdapter: JobListAdapter
-    private val list = mutableListOf<Job>()
-
 
     //widget init
     override fun initWidget(view: View) {
-        jobListAdapter = JobListAdapter(context!!, list, this)
+        jobListAdapter = JobListAdapter(context!!, presenter.list, this)
         mainrec.layoutManager = LinearLayoutManager(context)
         mainrec.adapter = jobListAdapter
         refreshlayout.setColorSchemeResources(R.color.colorAccent)
+
         refreshlayout.setOnRefreshListener {
-            presenter.getJobList(0)
+            //presenter.getJobList(0)
+            getJobList(0)
+
         }
     }
 
@@ -41,33 +42,52 @@ class MainFragment : BaseFragment(), IMainView, JobListAdapter.Listener {
     //the first init data before initWidget
     private fun initList() {
         refreshlayout.isRefreshing = true
+        //presenter.getJobList(0)
         Handler().postDelayed({
-            presenter.getJobList(0)
+            getJobList(0)
         }, 2000)
     }
 
-    //add jobList
-    override fun addJobList(list: List<Job>) {
-        jobListAdapter.addAll(list)
-        if (refreshlayout.isRefreshing)
-            refreshlayout.isRefreshing = false
+    //get job list from net
+    private fun getJobList(offset: Int) {
+        runDisRx(presenter.getJobListRx(offset), object : DisposableObserver<List<Job>>() {
+            override fun onComplete() {}
+
+            override fun onNext(newList: List<Job>) {
+                newList.map {
+                    if (SharedPreferencesUtil.getListData("collections", String::class.java).contains(it.id))
+                        it.isCollected = true
+                }
+                //refresh list
+                jobListAdapter.replaceAll(newList)
+                refreshlayout.isRefreshing = false
+            }
+
+            override fun onError(e: Throwable) {
+                println("~~~Error~~~" + e.message)
+            }
+        })
     }
 
-    //refresh jobList
-    override fun refreshJobList(list: List<Job>) {
-        jobListAdapter.replaceAll(list)
-        refreshlayout.isRefreshing = false
-    }
 
     //keepbtn click event
     override fun onCollectBtnClick(pos: Int) {
-        presenter.collectJob(list[pos])
+        runDisRx(presenter.collectJobRx(presenter.list[pos]), object : DisposableObserver<Job>() {
+            override fun onComplete() {}
+            override fun onNext(job: Job) {
+                val list = SharedPreferencesUtil.getListData("collections", String::class.java)
+                if (job.isCollected) {
+                    list.remove(job.id)
+                } else {
+                    list.add(job.id)
+                }
+                SharedPreferencesUtil.putListData("collections", list)
+                //Trigger Collect
+                jobListAdapter.triggerCollectItem(job)
+            }
 
-    }
-
-    //collect callBack
-    override fun onTriggerCollect(job: Job) {
-        jobListAdapter.triggerCollectItem(job)
+            override fun onError(e: Throwable) {}
+        })
     }
 
 
