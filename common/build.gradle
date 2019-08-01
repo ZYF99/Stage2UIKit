@@ -42,8 +42,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //glide
     api "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    //Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.RxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.RxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.adapter_RxJava2Version"
 
     implementation project(':factory')
+
 }
 repositories {
     mavenCentral()

@@ -1,19 +1,20 @@
 package com.example.stage2_uikit.main
 
+
 import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.app.BaseFragment
-import com.example.factory.data.Job
-import com.example.factory.net.runDisRx
+import com.example.factory.presenter.bindLife
 import com.example.factory.presenter.main.IMain
 import com.example.factory.presenter.main.MainPresenter
+import com.example.factory.presenter.runRxSingle
 import com.example.factory.utils.SharedPreferencesUtil
 import com.example.stage2_uikit.R
-import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.fragment_main.*
+import android.annotation.SuppressLint as SuppressLint1
 
-class MainFragment : BaseFragment(), IMain, JobListAdapter.Listener {
+class MainFragment : BaseFragment(), IMain.View, JobListAdapter.Listener {
 
     override val presenter = MainPresenter(this)
     override val layoutId: Int = R.layout.fragment_main
@@ -25,11 +26,8 @@ class MainFragment : BaseFragment(), IMain, JobListAdapter.Listener {
         mainrec.layoutManager = LinearLayoutManager(context)
         mainrec.adapter = jobListAdapter
         refreshlayout.setColorSchemeResources(R.color.colorAccent)
-
         refreshlayout.setOnRefreshListener {
-            //presenter.getJobList(0)
             getJobList(0)
-
         }
     }
 
@@ -49,46 +47,37 @@ class MainFragment : BaseFragment(), IMain, JobListAdapter.Listener {
     }
 
     //get job list from net
+
     private fun getJobList(offset: Int) {
-        runDisRx(presenter.getJobListRx(offset), object : DisposableObserver<List<Job>>() {
-            override fun onComplete() {}
 
-            override fun onNext(newList: List<Job>) {
-                newList.map {
-                    if (SharedPreferencesUtil.getListData("collections", String::class.java).contains(it.id))
-                        it.isCollected = true
-                }
-                //refresh list
-                jobListAdapter.replaceAll(newList)
-                refreshlayout.isRefreshing = false
+        runRxSingle(true, presenter.getJobListRx(offset)).doOnSuccess { list ->
+            list.map { job ->
+                if (SharedPreferencesUtil.getListData("collections", String::class.java).contains(job.id))
+                    job.isCollected = true
             }
+            //refresh list
+            jobListAdapter.replaceAll(list)
+            refreshlayout.isRefreshing = false
+        }.bindLife(presenter.compositeDisposable)
 
-            override fun onError(e: Throwable) {
-                println("~~~Error~~~" + e.message)
-            }
-        })
+
     }
 
 
     //keepbtn click event
     override fun onCollectBtnClick(pos: Int) {
-        runDisRx(presenter.collectJobRx(presenter.list[pos]), object : DisposableObserver<Job>() {
-            override fun onComplete() {}
-            override fun onNext(job: Job) {
-                val list = SharedPreferencesUtil.getListData("collections", String::class.java)
-                if (job.isCollected) {
-                    list.remove(job.id)
-                } else {
-                    list.add(job.id)
-                }
-                SharedPreferencesUtil.putListData("collections", list)
-                //Trigger Collect
-                jobListAdapter.triggerCollectItem(job)
+
+        runRxSingle(false, presenter.collectJobRx(presenter.list[pos]).doOnSuccess { job ->
+            val list = SharedPreferencesUtil.getListData("collections", String::class.java)
+            if (job.isCollected) {
+                list.remove(job.id)
+            } else {
+                list.add(job.id)
             }
+            SharedPreferencesUtil.putListData("collections", list)
+            //Trigger Collect
+            jobListAdapter.triggerCollectItem(job)
+        }).bindLife(presenter.compositeDisposable)
 
-            override fun onError(e: Throwable) {}
-        })
     }
-
-
 }

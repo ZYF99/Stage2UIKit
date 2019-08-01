@@ -1,12 +1,19 @@
 package com.example.factory.presenter
 
-import io.reactivex.disposables.CompositeDisposable
 
-open class BasePresenter {
 
-    var disposables = CompositeDisposable()
+
+open class BasePresenter(var view: IBase.View?) : IBase.Presenter {
+
+
 
     open fun onDestroy() {
-        disposables.clear()
+        view = null
+        compositeDisposable.clear()
     }
+
+
+
+
+
 }

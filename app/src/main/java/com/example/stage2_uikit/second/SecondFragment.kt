@@ -11,12 +11,13 @@ import com.example.common.app.BaseFragment
 import com.example.common.utils.JudgeUtil
 import com.example.common.widget.*
 import com.example.factory.presenter.BasePresenter
+import com.example.factory.presenter.IBase
 import com.example.stage2_uikit.R
 import kotterknife.bindView
 
 
-class SecondFragment : BaseFragment(), SexBox.OnBoxItemClickListener, View.OnClickListener {
-    override val presenter = BasePresenter()
+class SecondFragment : BaseFragment(), SexBox.OnBoxItemClickListener, View.OnClickListener, IBase.View {
+    override val presenter = BasePresenter(this)
 
     private val btnDateDown: ImageView by bindView(R.id.btndatedown)
     private val btnJobDown: ImageView by bindView(R.id.btnjobdown)

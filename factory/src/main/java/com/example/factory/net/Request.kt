@@ -3,6 +3,7 @@ package com.example.factory.net
 import com.example.factory.data.Job
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,10 +15,10 @@ interface Request{
     }
 
     @GET("jobs?")
-    fun getJobList(@Query("offset")offset:Int):Observable<List<Job>>
+    fun getJobList(@Query("offset")offset:Int):Single<List<Job>>
 
 
     @GET("job?")
-    fun getJob(@Query("jobId")Id:String):Observable<Job>
+    fun getJob(@Query("jobId")Id:String):Single<Job>
 
 }

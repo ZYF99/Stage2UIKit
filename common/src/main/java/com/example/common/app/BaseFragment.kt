@@ -1,5 +1,6 @@
 package com.example.common.app
 
+
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -8,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.factory.presenter.BasePresenter
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(){
 
     abstract val layoutId: Int
-    abstract val presenter: BasePresenter
+    abstract val presenter: com.example.factory.presenter.BasePresenter
+
 
     //create view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,7 +60,12 @@ abstract class BaseFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+
     }
+
+
+
+
 
 
 }

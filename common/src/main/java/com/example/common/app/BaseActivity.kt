@@ -3,14 +3,13 @@ package com.example.common.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.factory.presenter.BasePresenter
 
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(){
 
     //get current layout id
     abstract val contentLayoutId: Int
-    abstract val presenter:BasePresenter
+    abstract val presenter: com.example.factory.presenter.BasePresenter
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,13 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun initData() {
 
     }
+
+    //destroy
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
 
 
 

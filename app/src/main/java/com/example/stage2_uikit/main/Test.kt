@@ -3,6 +3,7 @@ package com.example.stage2_uikit.main
 import android.annotation.SuppressLint
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
@@ -13,8 +14,9 @@ import java.util.concurrent.Callable
 val list = listOf<String>("asd", "bsd", "csd")
 
 @SuppressLint("CheckResult")
-fun main() {
 
+
+/*
     Single.just(1)
         .observeOn(Schedulers.newThread())
         .flatMap {
@@ -27,8 +29,7 @@ fun main() {
             println(Thread.currentThread())
         }
         .blockingGet()
-
-
+*/
 
 
 /*    var a = 0
@@ -53,18 +54,39 @@ fun main() {
 
     Observable.create(ObservableOnSubscribe<Int> { })*/
 
-/*
 
-    Observable.fromCallable {
+
+
+fun main() {
+    Single.just(1)
+
+
+        .flatMap {
+            Single.error<Int>(RuntimeException())
+                .observeOn(Schedulers.newThread())
+                .doOnError {
+                    println(Thread.currentThread().name)
+                }
+                .subscribeOn(Schedulers.computation())
+
+
+        }
+
+/*        .subscribeOn(Schedulers.computation())
+        .doOnError {
+            // `Schedulers.newThread()`创建的线程中
+            println(Thread.currentThread().name)
+        }*/
+        .blockingGet()
+
+
+/*    Observable.fromCallable {
         println("1")
         listOf("1", "2")
-    }.doOnSubscribe(object :Consumer<Disposable>{
-            override fun accept(disposable: Disposable) {
-                println(2)
-            }
-
-        })
+    }
+        .doOnSubscribe { disposable -> println("2") }
         .doOnNext { l -> println("3") }
+
         .flatMap { l ->
             Observable.fromIterable(l)
                 .doOnSubscribe { disposable -> println("4") }
@@ -76,11 +98,30 @@ fun main() {
         .map { s -> s + "map" }
         .doOnSubscribe { disposable -> println("8") }
         .doOnNext { s -> println("9") }
-        .blockingSubscribe()
-*/
+        .blockingSubscribe()*/
 
 
-    //concatMapTest()
+    val d = Single.just("1")
+/*        .doOnSubscribe {  }
+        .doOnSubscribe {  }
+        .doOnSubscribe {  }
+        .doOnSubscribe { }
+        .subscribeOn(Schedulers.newThread())
+        .doOnSubscribe {  }
+        .doOnSubscribe {  }
+        .subscribeOn(Schedulers.io())*/
+        .blockingGet()
+
+
+}
+
+
+/*fun <T> Single<T>.bindLife(){
+    compositeDisposable.add(this.subscribe({},{}))
+}*/
+
+
+//concatMapTest()
 
 /*    Observable.create(ObservableOnSubscribe<Int> { e ->
         e.onNext(12)
@@ -90,7 +131,6 @@ fun main() {
         .flatMap { i -> Observable.fromIterable(listOf("s:$i", "s1:${i + 1}", "s1:${i + 2}")) }
         .subscribe { t -> println(t) }*/
 
-}
 /*
 @SuppressLint("CheckResult")
 fun callableTest() {
@@ -141,10 +181,9 @@ fun mapTest() {
     Observable.just(list).map { t -> t }.subscribe { s -> println(s) }
 }
 
-
-
-
 class Test {
 
 
 }
+
+

@@ -5,11 +5,11 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.app.BaseActivity
 import com.example.factory.data.Job
+import com.example.factory.presenter.bindLife
 import com.example.factory.presenter.collection.CollectionPresenter
 import com.example.factory.presenter.collection.ICollection
+import com.example.factory.presenter.runRxSingle
 import com.example.stage2_uikit.main.JobListAdapter
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_collection.*
 
 class CollectionActivity : BaseActivity(), ICollection.View, JobListAdapter.Listener {
@@ -34,20 +34,18 @@ class CollectionActivity : BaseActivity(), ICollection.View, JobListAdapter.List
 
 
     //listChanged CallBack
+    @SuppressLint("SetTextI18n")
     private fun refreshList() {
-        presenter.refreshListRx(object : SingleObserver<List<Job>> {
-            @SuppressLint("SetTextI18n")
-            override fun onSuccess(newList: List<Job>) {
-                newList.map {
-                    it.isCollected = true
+
+        runRxSingle(true, presenter.getJobList())
+            .doOnSuccess { newList ->
+                newList.map { item ->
+                    item.isCollected = true
                 }
                 jobListAdapter.replaceAll(newList)
                 tv_title_sec.text = "${newList.size}件"
-            }
+            }.bindLife(presenter.compositeDisposable)
 
-            override fun onSubscribe(d: Disposable) {}
-            override fun onError(e: Throwable) {}
-        })
     }
 
     @SuppressLint("SetTextI18n")

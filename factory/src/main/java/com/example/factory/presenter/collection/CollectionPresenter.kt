@@ -3,33 +3,41 @@ package com.example.factory.presenter.collection
 import android.annotation.SuppressLint
 import com.example.factory.data.Job
 import com.example.factory.net.NetWorkManager
-import com.example.factory.net.runDisRx
-import com.example.factory.net.runRxFromList
 import com.example.factory.presenter.BasePresenter
 import com.example.factory.utils.SharedPreferencesUtil
-import io.reactivex.*
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class CollectionPresenter(val view: ICollection.View) : BasePresenter(), ICollection.Presenter {
-
+class CollectionPresenter(private val mView: ICollection.View) : BasePresenter(mView), ICollection.Presenter {
 
 
     val jobList = mutableListOf<Job>()
-    private var idList = mutableListOf<String>()
+    var idList = mutableListOf<String>()
 
 
     @SuppressLint("CheckResult")
-    override fun refreshListRx(singleObserver: SingleObserver<List<Job>>): Single<List<Job>> {
-        val request = NetWorkManager.getRequest()
-        idList = SharedPreferencesUtil.getListData("collections", String::class.java)
+    override fun getJobList(): Single<List<Job>> {
+
         //get whole List by Rxjava（toList）
-        return runRxFromList({ request.getJob(it) }, idList,singleObserver)
+        idList = SharedPreferencesUtil.getListData("collections", String::class.java)
+
+        val request = NetWorkManager.getRequest()
+
+        return Observable.fromIterable(idList).flatMapSingle {
+            request.getJob(it)
+        }
+            .toList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun deleteItem(pos: Int){
+    override fun deleteItem(pos: Int) {
         idList.removeAt(pos)
         SharedPreferencesUtil.putListData("collections", idList)
-        view.onRemove(jobList[pos])
+        mView.onRemove(jobList[pos])
     }
 }
 

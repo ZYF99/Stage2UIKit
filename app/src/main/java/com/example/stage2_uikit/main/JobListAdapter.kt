@@ -126,6 +126,8 @@ class JobListAdapter(private val context: Context, private var list: MutableList
         } else {
             holder.linStation.visibility = View.VISIBLE
             oldStationPage = -1
+
+
             val stationAdapter = ImagePagerAdapter(context, item.img, holder.stationPager)
             holder.stationPager.adapter = stationAdapter
             //init stationBtn
